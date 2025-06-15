@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Oto Galeri - Premium Araç Satış</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            color: #f39c12; /* Yazılar turuncu yapıldı */
+            background-color: black; /* Arka plan siyah yapıldı */
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Header */
+        .header {
+            background: rgba(255, 255, 255, 0.1); /* Menü çubuğu beyaz yarı saydam */
+            border-radius: 15px;
+            margin-bottom: 20px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 30px;
+            color: #f39c12; /* Menü yazıları turuncu */
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #f39c12; /* Logo rengi turuncu */
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: #f39c12; /* Turuncu yazılar */
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            cursor: pointer;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            color: #e67e22; /* Hover durumunda biraz daha koyu turuncu */
+        }
+
+        /* Pages */
+        .page {
+            display: none;
+            background: rgba(255, 255, 255, 0.1); /* Sayfa arka planı yarı saydam beyaz */
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Home Page */
+        .welcome-section {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .welcome-title {
+            font-size: 48px;
+            color: #f39c12; /* Hoş Geldiniz yazısı turuncu yapıldı */
+            margin-bottom: 20px;
+        }
+
+        .welcome-subtitle {
+            font-size: 20px;
+            color: #f39c12; /* Alt yazı turuncu yapıldı */
+            margin-bottom: 30px;
+        }
+
+        /* Araçlar Sayfası */
+        .cars-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 30px;
+        }
+
+        .car-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer; /* Tıklanabilir hale getirmek için */
+        }
+
+        .car-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .car-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover; /* Fotoğrafın orantılı görünmesi için */
+            margin-bottom: 20px; /* Resmin altındaki boşluğu artırıyoruz */
+        }
+
+        .car-info {
+            padding: 20px;
+        }
+
+        .car-title {
+            font-size: 20px;
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+
+        .car-price {
+            font-size: 24px;
+            font-weight: bold;
+            color: #e74c3c;
+            margin-bottom: 15px;
+        }
+
+        /* Detaylı Bilgi Bölümü */
+        .car-details {
+            margin-top: 20px;
+            padding: 15px;
+            background: #f9f9f9;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .detail-title {
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+
+        /* Hakkımızda ve İletişim Sayfası */
+        .about-content, .contact-content {
+            margin-top: 20px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .nav-links {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <nav class="nav">
+                <div class="logo">ARAS AUTO</div>
+                <ul class="nav-links">
+                    <li><a href="#" class="nav-link active" data-page="home">Ana Sayfa</a></li>
+                    <li><a href="#" class="nav-link" data-page="cars">Araçlar</a></li>
+                    <li><a href="#" class="nav-link" data-page="about">Hakkımızda</a></li>
+                    <li><a href="#" class="nav-link" data-page="contact">İletişim</a></li>
+                </ul>
+            </nav>
+        </header>
+
+        <!-- Ana Sayfa -->
+        <main class="page active" id="home">
+            <div class="welcome-section">
+                <h1 class="welcome-title">Hoş Geldiniz!</h1>
+                <p class="welcome-subtitle">En iyi 2.el ve sıfır araçlar burada</p>
+				<img src="img/logo.jpg" alt="Firma Logosu" style="width: 600px; margin-top: 20px;"> 
+            </div>
+        </main>
+
+        <!-- Araçlar Sayfası -->
+        <main class="page" id="cars">
+            <h2 style="text-align: center; margin-bottom: 30px; color: #f39c12; font-size: 36px;">Tüm Araçlarımız</h2>
+            <div class="cars-grid">
+                <div class="car-card" onclick="showCarDetails('details1')">
+                    <img src="araçlar/arac1.jpg" alt="Araç 1" class="car-image">
+                    <div class="car-info">
+                        <h3 class="car-title">MERCEDES AMG C200 BLUETECH</h3>
+                        <p class="car-price">Fiyat: 100.000 TL</p>
+                    </div>
+                </div>
+                <div class="car-card" onclick="showCarDetails('details2')">
+                    <img src="araçlar/arac2.jpg" alt="Araç 2" class="car-image">
+                    <div class="car-info">
+                        <h3 class="car-title">Dolular Dolusu Ekstralı Golf</h3>
+                        <p class="car-price">Fiyat: 150.000 TL</p>
+                    </div>
+                </div>
+                <div class="car-card" onclick="showCarDetails('details3')">
+                    <img src="araçlar/arac3.jpg" alt="Araç 3" class="car-image">
+                    <div class="car-info">
+                        <h3 class="car-title">Tertemiz AccentBlue </h3>
+                        <p class="car-price">Fiyat: 200.000 TL</p>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Detaylı Bilgi Sayfası -->
+        <main class="page" id="carDetails">
+            <button onclick="showPage('cars')" style="margin-bottom: 20px;">Geri</button>
+            <div id="carInfo"></div>
+        </main>
+
+        <!-- Hakkımızda Sayfası -->
+        <main class="page" id="about">
+            <h2 style="text-align: center; margin-bottom: 30px; color: #f39c12; font-size: 36px;">Hakkımızda</h2>
+            <div class="about-content">
+                <p style="color: #f39c12;">ARAS AUTO, kaliteli araçlar sunarak müşteri memnuniyetini ön planda tutan bir otomotiv firmasıdır.</p>
+            </div>
+        </main>
+
+        <!-- İletişim Sayfası -->
+        <main class="page" id="contact">
+            <h2 style="text-align: center; margin-bottom: 30px; color: #f39c12; font-size: 36px;">İletişim</h2>
+            <div class="contact-content">
+                <p style="color: #f39c12;">Adres: Karacaahmet, 38004. Cd. no:7 B blok 38, 27590 Şehitkamil/Gaziantep</p>
+                <p style="color: #f39c12;">Telefon: 0544 550 83 52</p>
+				  <form action="mailto:euzun7936@gmail.com" method="POST" enctype="text/plain" style="margin-top: 30px; color: #f39c12;">
+            <label for="name">Ad Soyad:</label><br>
+            <input type="text" id="name" name="Ad Soyad" required style="width: 100%; padding: 10px;"><br><br>
+
+            <label for="email">E-Posta:</label><br>
+            <input type="email" id="email" name="E-Posta" required style="width: 100%; padding: 10px;"><br><br>
+
+            <label for="phone">Telefon Numarası:</label><br>
+            <input type="tel" id="phone" name="Telefon" required style="width: 100%; padding: 10px;"><br><br>
+
+            <label for="car">İlgilendiğiniz Araç:</label><br>
+            <input type="text" id="car" name="İlgilendiği Araç" style="width: 100%; padding: 10px;"><br><br>
+
+            <label for="message">Mesajınız:</label><br>
+            <textarea id="message" name="Mesaj" rows="5" style="width: 100%; padding: 10px;"></textarea><br><br>
+
+            <button type="submit" style="padding: 10px 20px; background-color: #f39c12; border: none; color: white; font-weight: bold; border-radius: 5px;">Gönder</button>
+        </form>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Sayfa geçiş fonksiyonu
+        function showPage(pageId) {
+            const pages = document.querySelectorAll('.page');
+            const navLinks = document.querySelectorAll('.nav-link');
+
+            // Tüm sayfaları gizle
+            pages.forEach(page => {
+                page.classList.remove('active');
+            });
+
+            // Aktif sayfayı göster
+            document.getElementById(pageId).classList.add('active');
+
+            // Tüm bağlantılardan aktif sınıfı kaldır
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+            });
+
+            // Aktif bağlantıyı ayarla
+            const activeLink = document.querySelector(`.nav-link[data-page="${pageId}"]`);
+            activeLink.classList.add('active');
+        }
+
+        // Araç detaylarını gösterme fonksiyonu
+        function showCarDetails(detailId) {
+            let carInfo = '';
+            let carImage = '';
+            if (detailId === 'details1') {
+                carImage = 'araçlar/arac1.jpg';
+                carInfo = `
+                    <img src="${carImage}" alt="MERCEDES AMG C200 BLUETECH" class="car-image" style="height: 400px; object-fit: contain;">
+                    <h3 class="car-title" style="color: #f39c12;">2017 AMG C200 BLUETECH</h3>
+             	<p class="detail-title" style="color: #f39c12;">Marka: MERCEDES</p>
+					<p class="detail-title" style="color: #f39c12;">Model: C200 AMG</p>
+					<p class="detail-title" style="color: #f39c12;">yıl: 2014</p>
+					<p class="detail-title" style="color: #f39c12;">Hasar Kaydı: Yok</p>
+					<p class="detail-title" style="color: #f39c12;">Vites: Otomatik</p>
+				    <p class="detail-title" style="color: #f39c12;">Motor Hacmi: 2.0</p>
+                    <p class="detail-title" style="color: #f39c12;">Hasar Kaydı: Yok</p>
+                    <p class="detail-title" style="color: #f39c12;">Araç Durumu: ARACIMIZDA PARTİKÜL İPTAL OLMUŞTUR HATA BOYA YOKTUR İMZALI KASADIR</p>
+                `;
+            } else if (detailId === 'details2') {
+                carImage = 'araçlar/arac2.jpg';
+                carInfo = `
+                    <img src="${carImage}" alt="Dolular Dolusu Ekstralı Golf" class="car-image" style="height: 400px; object-fit: contain;">
+                    <h3 class="car-title" style="color: #f39c12;">Dolular Dolusu Ekstralı Golf</h3>
+                    <p class="detail-title" style="color: #f39c12;">Motor Hacmi: 1.6</p>
+					<p class="detail-title" style="color: #f39c12;">Marka: Volkswagen</p>
+					<p class="detail-title" style="color: #f39c12;">Model: Golf</p>
+					<p class="detail-title" style="color: #f39c12;">yıl: 2016</p>
+					<p class="detail-title" style="color: #f39c12;">Motor Hacmi: 1.6 TSİ</p>
+					<p class="detail-title" style="color: #f39c12;">Vites: Otomatik</p>
+                    <p class="detail-title" style="color: #f39c12;">Hasar Kaydı: 12.000 TL</p>
+                    <p class="detail-title" style="color: #f39c12;">Araç Durumu: Aracımızda sağ ön kapı boyalı olup kaput lokal boyalı harici hatasızdır gelip görülmeye değecek bir araçtır</p>
+                `;
+            } else if (detailId === 'details3') {
+                carImage = 'araçlar/arac3.jpg';
+                carInfo = `
+                    <img src="${carImage}" alt="Tertemiz AccentBlue" class="car-image" style="height: 400px; object-fit: contain;">
+                    <h3 class="car-title" style="color: #f39c12;">Tertemiz AccentBlue</h3>
+                    <p class="detail-title" style="color: #f39c12;">Marka: Hyundai</p>
+					<p class="detail-title" style="color: #f39c12;">Model: Accent Blue</p>
+					<p class="detail-title" style="color: #f39c12;">yıl: 2014</p>
+					<p class="detail-title" style="color: #f39c12;">Motor Hacmi: 1.6 CRDİ</p>
+					<p class="detail-title" style="color: #f39c12;">Hasar Kaydı: Yok</p>
+					<p class="detail-title" style="color: #f39c12;">Vites: Otomatik</p>
+                    <p class="detail-title" style="color: #f39c12;">Hasar Kaydı: Yok</p>
+                    <p class="detail-title" style="color: #f39c12;">Araç Durumu: Aracımız Hatasız Boyasızdır 120.000 km dedir zerre hatası yoktur ömürlüktür</p>
+                `;
+            }
+
+            // Araç bilgilerini göster
+            document.getElementById('carInfo').innerHTML = carInfo;
+            showPage('carDetails');
+        }
+
+        // Sayfa yüklendiğinde ana sayfayı göster
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.addEventListener('click', function(event) {
+                    event.preventDefault();
+                    showPage(this.getAttribute('data-page'));
+                });
+            });
+            showPage('home');
+        });
+    </script>
+</body>
+</html>
